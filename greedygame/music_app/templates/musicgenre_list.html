@@ -1,0 +1,14 @@
+
+
+{% block content %}
+    <h2>Music Genres</h2>
+    <table>
+        {% for genre in musicgenres_list %}
+            <tr>
+                <td>
+                    <a href="/music/genres/{{ genre.genre_id }}/">{{ genre.genre_name }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
