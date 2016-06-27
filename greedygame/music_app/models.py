@@ -24,6 +24,8 @@ class MusicTrack(models.Model):
 class MusicGenre(models.Model):
     genre_name = models.CharField(unique=True, max_length=40)
     genre_id = models.AutoField(primary_key=True)
+    def __str__(self):
+        return "%s" % (self.genre_name)
 #
 # class MusicGenreForm(ModelForm):
 #     class Meta:
