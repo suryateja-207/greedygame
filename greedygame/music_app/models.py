@@ -10,17 +10,6 @@ class MusicTrack(models.Model):
         verbose_name = "MusicTrack"
         verbose_name_plural = "MusicTrack"
 
-#
-# class MusicTrackForm(ModelForm):
-#     class Meta:
-#         model = MusicTrack
-#         fields = ["title","rating"]
-
-# class MusicTrackForm(forms.Form):
-#     title = forms.CharField(max_length=40)
-#     rating = forms.IntegerField()
-#     genre = forms.ModelMultipleChoiceField(queryset = MusicGenre.objects.all())
-
 class MusicGenre(models.Model):
     genre_name = models.CharField(unique=True, max_length=40)
     genre_id = models.AutoField(primary_key=True)

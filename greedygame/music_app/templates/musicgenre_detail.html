@@ -1,1 +1,8 @@
 <h1>{{ object.genre_name}}</h1>
+{% for track in Track %}
+            <tr>
+            {% for name in track %}
+            <p> Title: {{ name.title }}</p>
+            {% endfor %}
+            </tr>
+        {% endfor %}

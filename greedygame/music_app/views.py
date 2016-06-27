@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, View
+from django.shortcuts import render,redirect
+from django.views.generic import ListView, DetailView, View, UpdateView
 from music_app.models import MusicTrack, MusicGenre, MusicTrackGenre
-from music_app.forms import MusicTrackForm, MusicGenreForm
+from music_app.forms import MusicTrackForm, MusicGenreForm,MusicTrackUpdateForm
 from django.views.decorators.csrf import *
 
 
@@ -45,6 +45,7 @@ class MusicGenreListForm(View):
             x = form.cleaned_data
             MusicsGenre = MusicGenre(x['title'])
             MusicsGenre.save()
+            return redirect("/music/genres")
         else:
             form = MusicGenreForm()
             data = {'form': form}
@@ -71,13 +72,13 @@ class MusicTrackListForm(View):
             MusicsTrack.save()
             for genreds in x['genre'].values():
                 print(x['genre'].values(), "suryaa")
-                ids = int(genreds['genre_id'])
-                qw = MusicGenre.objects.get(genre_id=ids)
+                id = int(genreds['genre_id'])
+                music_genre_object = MusicGenre.objects.get(genre_id=id)
                 # print(qw)
                 print(MusicsTrack)
-                genretrack = MusicTrackGenre(track_id=MusicsTrack, genre_id=qw)
+                genretrack = MusicTrackGenre(track_id=MusicsTrack, genre_id=music_genre_object)
                 genretrack.save()
-
+                return redirect("/music/tracks")
         else:
             form = MusicTrackForm()
             data = {'form': form}
@@ -88,9 +89,6 @@ class MusicTrackDetail(DetailView):
     template_name = 'music_app/templates/musictrack_detail.html'
     model = MusicTrack
 
-    # def get_object(self):
-    #     model = MusicTrack.objects.get(pk=self.kwargs['pk'])
-    #     print(model.track_id,"model")
     def get_context_data(self, **kwargs):
         context = super(MusicTrackDetail, self).get_context_data(**kwargs)
         model = MusicTrack.objects.get(pk=self.kwargs['pk'])
@@ -98,7 +96,6 @@ class MusicTrackDetail(DetailView):
         music_track_genre_object = MusicTrackGenre.objects.filter(track_id=model.track_id)
         track_list = []
         for i in music_track_genre_object:
-            # print(i.genre_id_id,"genre_id")
             print(MusicGenre.objects.get(genre_id=i.genre_id_id).genre_name)
             track_list.append(MusicGenre.objects.filter(genre_id=i.genre_id_id))
         # print(music_track_genre_object.genre_id, "genre_id")
@@ -116,7 +113,37 @@ class MusicGenreList(ListView):
     context_object_name = 'musicgenres_list'
     model = MusicGenre
 
+class MusicTrackUpdate(View):
+    # model = MusicTrack
+    # fields = ["title","rating"]
+    # success_url = '/music/tracks/'
+
+    # def get(self, request, track_id = None):
+    #     e = request.GET.copy()
+    #     print(e,"sisisi")
+    #     music = MusicTrack.objects.get(track_id =track_id)
+    #     genreId = MusicTrackGenre.objects.filter(track_id = e["track_id"])
+    #     form = MusicTrackForm(title = music.title,rating = music.rating, genre = genreId)
+    #     data = {'form': form}
+    #     return render(request, 'music_app/templates/musictrack_update.html', data)
+
+    # template_name = 'music_app/templates/musictrack_update.html'
 
 class MusicGenreDetail(DetailView):
     template_name = 'music_app/templates/musicgenre_detail.html'
     model = MusicGenre
+
+    def get_context_data(self, **kwargs):
+        context = super(MusicGenreDetail, self).get_context_data(**kwargs)
+        model = MusicGenre.objects.get(pk=self.kwargs['pk'])
+        print(model.genre_id, "model")
+        music_track_genre_object = MusicTrackGenre.objects.filter(genre_id=model.genre_id)
+        track_list = []
+        for i in music_track_genre_object:
+              print(i.track_id_id,"track_id")
+        #     print(MusicTrack.objects.get(track_id=i.track_id_id).title)
+              track_list.append(MusicTrack.objects.filter(track_id=i.track_id_id))
+        # print(track_list)
+        context['Track'] = track_list
+        print(context,"context")
+        return context
