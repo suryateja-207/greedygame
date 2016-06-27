@@ -1,6 +1,10 @@
 
 {% block content %}
     <h2>Music Tracks</h2>
+    <form type="get" action="." style="margin: 0">
+    <input  id="searchbox" type="text" name="searchbox"  placeholder="Search..." >
+    <button id="search_submit" type="submit" >Submit</button>
+</form>
     <table>
         {% for track in musictracks_list %}
             <tr>
