@@ -1,6 +1,6 @@
 <style type="text/css">
     table{
-        border: 4px solid grey; border-collapse: collapse; padding: 10px;
+        border: 4px solid grey !important;
     }
     tr{
         border: 2px solid grey; border-collapse: collapse; padding: 30px;
@@ -8,6 +8,12 @@
     td{
         font-size:20px; font-family: Lato; color: #000000;
     }
+    table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    font-family: Lato;
+    padding: 10px;
+}
     .add{
         padding-left:20%;
     }
@@ -17,17 +23,23 @@
     <h2>Music Genres</h2>
     <form type="get" action=".">
     <input  id="searchbox" type="text" name="search"  placeholder="Search..." >
-    <button id="search_submit" type="submit" >Submit</button>
+    <button id="search_submit" type="submit" >Search</button>
 </form>
     <table>
     <th>
         Genres
+    </th>
+    <th>
+
     </th>
         {% for genre in musicgenres_list %}
             <tr>
                 <td>
                     <a href="/music/genres/{{ genre.genre_id }}/">{{ genre.genre_name }}</a>
                 </td>
+            <td>
+                <a href="/music/genres/edit/{{ genre.genre_id }}/">Edit</a>
+            </td>
             </tr>
         {% endfor %}
     </table>
