@@ -10,7 +10,7 @@ class MusicTrackList(ListView):
     queryset = MusicTrack.objects.order_by('title')
     context_object_name = 'musictracks_list'
     model = MusicTrack
-    paginate_by = 2
+    paginate_by = 3
 
     def get_queryset(self):
         print(self.request.GET.copy(), "sdsdds")
@@ -112,8 +112,27 @@ class MusicGenreList(ListView):
     queryset = MusicGenre.objects.order_by('genre_name')
     context_object_name = 'musicgenres_list'
     model = MusicGenre
+    print("hiii")
 
-class MusicTrackUpdate(View):
+    def get_queryset(self):
+        print(self.request.GET.copy(), "sdsdds")
+
+        try:
+            name = self.request.GET.copy()['search']
+            print("sdasd")
+        except:
+            name = ''
+        print(name, "name")
+        if (name != ''):
+            object_list = self.model.objects.filter(genre_name__icontains=name)
+        else:
+            object_list = self.model.objects.all();
+        return object_list;
+
+
+
+
+# class MusicTrackUpdate(View):
     # model = MusicTrack
     # fields = ["title","rating"]
     # success_url = '/music/tracks/'

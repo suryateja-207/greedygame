@@ -1,8 +1,26 @@
+<style>
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    font-family: Lato;
+    padding: 10px;
+}
+</style>
 <h1>{{ object.genre_name}}</h1>
+<table>
+<th>
+        Title
+    </th>
+    <th>
+       Rating
+    </th>
 {% for track in Track %}
-            <tr>
-            {% for name in track %}
-            <p> Title: {{ name.title }}</p>
-            {% endfor %}
+    {% for name in track %}
+                <tr>
+            <td> {{ name.title }}</td>
+                <td>{{ name.rating }}</td>
             </tr>
+            {% endfor %}
+
         {% endfor %}
+</table>
