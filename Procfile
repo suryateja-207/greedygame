@@ -1,2 +1,1 @@
-web: gunicorn stormy-brook-17128.wsgi --log-file -
-worker: python worker.py
+web: python manage.py run_gunicorn
