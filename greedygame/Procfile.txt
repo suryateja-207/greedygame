@@ -1,1 +1,1 @@
-web: gunicorn whispering-escarpment-70861.wsgi --log-file -
+web: gunicorn gettingstarted.wsgi --log-file -
