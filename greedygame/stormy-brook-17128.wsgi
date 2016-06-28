@@ -1,5 +1,5 @@
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gunicorn stormy-brook-17128.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "stormy-brook-17128.settings")
 
 # This application object is used by the development server
 # as well as any WSGI server configured to use this file.
