@@ -58,16 +58,15 @@ class MusicTrackListForm(View):
         return render(request, 'music_app/templates/musictrack_form.html', data)
 
     def post(self, request):
-        print(request.POST)
         form = MusicTrackForm(request.POST)
         if form.is_valid():
             x = form.cleaned_data
             music_track = MusicTrack(x['title'], x['rating'])
             music_track.save()
             for genres in x['genre'].values():
+                print(x['genre'].values(), "suryaa")
                 id = int(genres['genre_id'])
                 music_genre_object = MusicGenre.objects.get(genre_id=id)
-                print(music_track)
                 genre_track = MusicTrackGenre(track_id=music_track, genre_id=music_genre_object)
                 genre_track.save()
                 return redirect("/music/tracks")
@@ -122,7 +121,6 @@ class MusicGenreListForm(View):
         return render(request, 'music_app/templates/musicgenre_form.html', data)
 
     def post(self, request):
-        print(request.POST, "12345678")
         form = MusicGenreForm(request.POST)
         if form.is_valid():
             x = form.cleaned_data
